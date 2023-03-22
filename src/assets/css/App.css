@@ -1,0 +1,14 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.header-text {
+  font-family: 'Lexend Deca', sans-serif;
+}
+
+.body-text {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 13px;
+}

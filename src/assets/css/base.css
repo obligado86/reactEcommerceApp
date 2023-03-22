@@ -1,0 +1,29 @@
+body {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+  width: 100vw;
+}
+
+.bg-color1 {
+  background-color: #FFC700;
+}
+
+.bg-color2 {
+  background-color: #545454;
+}
+
+.bg-hover-color1:hover {
+  background-color: #f78316;
+}
+
+#logo {
+  width: 120px;
+}
+
+#navbarScrollingDropdown {
+  color: white;
+}
+
+#navbarScrollingDropdown:hover {
+  color: lightgray;
+}

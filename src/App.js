@@ -1,25 +1,51 @@
-import logo from './logo.svg';
-import './App.css';
+import {useState, useEffect} from 'react';
+import {Container} from 'react-bootstrap';
+import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
+//=================== Package Imports ================
+
+import {UserProvider} from './UserContext';
+
+import './assets/css/App.css';
+import './assets/css/base.css';
+
+//sections
+import AnnouncmentBar from './sections/AnnouncementBar';
+import MainNavBar from './sections/MainNavBar';
+
+//pages
+import Home from './pages/Home';
+import Login from './pages/Login'
+import Products from './pages/Products'
+import Register from './pages/Register'
+import Error from './pages/Error'
+//================== local imports ===================
 
 function App() {
+
+  const [user, setUser] = useState({
+    id: null,
+    isAdmin: null
+  })
+
+  const unsetUser = () => {
+    localStorage.clear();
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <UserProvider value={{user, setUser, unsetUser}}>
+      <Router>
+        <AnnouncmentBar />
+        <MainNavBar />
+          <Routes>
+            <Route path="*" element={<Error/>}/>
+            <Route path="/" element={<Home/>}/>
+            <Route path="/login" element={<Login/>}/>
+            <Route path="/collection" element={<Products/>}/>
+            <Route path="/signup" element={<Register/>}/>
+          </Routes>
+      </Router>
+    </UserProvider>
+  )
 }
 
 export default App;
