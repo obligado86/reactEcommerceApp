@@ -27,3 +27,7 @@ body {
 #navbarScrollingDropdown:hover {
   color: lightgray;
 }
+
+.card-height {
+  min-height: 100%;
+}

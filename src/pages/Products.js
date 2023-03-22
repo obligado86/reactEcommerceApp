@@ -1,6 +1,6 @@
 import {useEffect, useState} from 'react';
 import ProductCard from '../sections/ProductCard';
-
+import {Container, Row} from 'react-bootstrap';
 
 export default function Products(){
 	const [products, setProducts] = useState([]);
@@ -17,8 +17,10 @@ export default function Products(){
 	}, []);
 
 	return (
-		<>
-			{products}
-		</>
+		<Container className="p-5">
+			<Row>
+				{products}
+			</Row>
+		</Container>
 	)
 }
