@@ -103,7 +103,7 @@ export default function AdminAddProduct(){
 	      	<Form.Group className="mb-3" controlId="firstName">
 	        	<Form.Label>Product Category</Form.Label>
 	        	<select value={ category } onChange={e => setCategory(e.target.value)} className="form-control ml-2 w-100" required>
-	        		<option value="none" default disabled>--Select Category--</option>
+	        		<option value="" selected disabled>--Select Category--</option>
 	        	  	<option value="Laptop">Laptop</option>
 	        	  	<option value="Destop">Destop</option>
 	        	  	<option value="Tablet">Tablet</option>
