@@ -31,3 +31,62 @@ body {
 .card-height {
   min-height: 100%;
 }
+
+.list-product {
+    min-width: 25%;
+  }
+
+
+/* =========== lg ============ */
+
+@media (max-width: 992px) {
+  h1 {
+    font-size: 23px;
+  }
+  h2 {
+    font-size: 21px;
+  }
+  h3 {
+    font-size: 19px;
+  }
+  
+}
+
+/* =========== md ============ */
+
+@media (max-width: 768px) {
+  h1 {
+    font-size: 22px;
+  }
+  h2 {
+    font-size: 20px;
+  }
+  
+}
+
+/* =========== sm ============ */
+
+@media (max-width: 576px) {
+  h1 {
+    font-size: 21px;
+  }
+  h2 {
+    font-size: 19px;
+  }
+  h3 {
+    font-size: 18px;
+  }
+  
+}
+
+/* =========== xs ============ */
+
+@media (min-width: 575px) {
+  h1 {
+    font-size: 20px;
+  }
+  h2 {
+    font-size: 18px;
+  }
+  
+}

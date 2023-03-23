@@ -12,8 +12,7 @@ export default function CourseCard({product}) {
 	const [isActive, setIsActive] = useState(false);
 	const navigate = useNavigate();
 
-	function addToCart(e){
-		e.preventDefault();
+	function addToCart(){
 		fetch(`${process.env.REACT_APP_API_URL}/collection/${_id}`, {
 			method: 'PUT',
 			headers: {
@@ -29,44 +28,46 @@ export default function CourseCard({product}) {
 					icon: "error",
 					text: "Item is out of stock"
 				})
+			} else {
+				document.getElementById("addCart").classList.add("btn-white")
 			}
 		}).catch(err => console.log(err))
 	}
 
+	function failReq(){
+		Swal.fire({
+					title: "Fail request",
+					icon: "error",
+					text: "must login to your account first"
+				})
+				navigate('/login')
+	}
+
 	useEffect(() => {
-		if(user !== null){
+		if(user.id !== null){
 			setIsActive(true)
 		} else {
 			setIsActive(false)
 		}
 	}, [user])
 
-	function addCartFail(){
-		Swal.fire({
-			title: "Fail Request",
-			icon: "error",
-			text: "Must login to your account first"
-		})
-		navigate('/login')
-	}
-
 	return (
-		<Col className="col-5 col-md-3 justify-content-between">
-			<Card style={{ width: '15rem' }} className="card-height my-2">
+		<Col className="col-6 col-lg-3 justify-content-between my-2">
+			<Card className="card-height my-2">
 			    <Card.Img variant="top" src={images} />
 			    <Card.Body>
 			        <Card.Title><h2>{name}</h2></Card.Title>
-			        <Card.Title>{brand}</Card.Title>
+			        <Card.Title><h3>{brand}</h3></Card.Title>
 			        <Card.Title>{reviews.rating}</Card.Title>
 			        <Card.Text>
 			          {description}
 			        </Card.Text>
 			        <Card.Title>{price}</Card.Title>
-			        <Button variant="dark my-1" href={`/collection/${_id}`} className="w-100">View Item</Button>
+			        <Button variant="dark" href={`/collection/${_id}`} className="w-100 mt-3">View Item</Button>
 			        {	isActive ?
-			        		<Button variant="warning" onClick={addToCart} className="w-100">Add to cart</Button>
+			        		<Button variant="warning" className="w-100 my-1 btn" onClick={addToCart} id="addCart">Add to cart</Button>
 			        		:
-			        		<Button variant="secondary" href className="w-100" onClick={addCartFail}>Add to cart</Button>
+			        		<Button variant="warning" onClick={failReq}className="w-100 my-1">Add to cart</Button>
 			        }
 			        
 			    </Card.Body>

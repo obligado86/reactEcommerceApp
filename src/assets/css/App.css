@@ -12,3 +12,8 @@
   font-family: 'Montserrat', sans-serif;
   font-size: 13px;
 }
+
+.relative {
+  position: relative;
+  top: 0;
+}

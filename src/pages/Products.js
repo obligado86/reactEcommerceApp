@@ -17,7 +17,7 @@ export default function Products(){
 	}, []);
 
 	return (
-		<Container className="p-5">
+		<Container className="px-1 px-md-5 py-5">
 			<Row>
 				{products}
 			</Row>

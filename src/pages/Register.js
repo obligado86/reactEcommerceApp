@@ -68,11 +68,10 @@ export default function Register(){
 		}, [email, password1, password2]);
 
 		return(
-			<Container className="p-5">
-				
-					{/*(user.id !== null) ?
-					    <Navigate to="/" />
-					:*/}
+				(user.id !== null) ?
+				    <Navigate to="/" />
+				:
+				<Container className="p-5">
 					<Form onSubmit={(e) => registerUser(e)}>
 						<Form.Group className="mb-3 w-100" controlId="firstName">
 				        	<Form.Label>First Name</Form.Label>

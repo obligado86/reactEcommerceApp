@@ -13,8 +13,10 @@ import AnnouncmentBar from './sections/AnnouncementBar';
 import MainNavBar from './sections/MainNavBar';
 
 //pages
+import Admin from './pages/Admin'
 import Home from './pages/Home';
 import Login from './pages/Login'
+import Logout from './pages/Logout'
 import Products from './pages/Products'
 import Register from './pages/Register'
 import Error from './pages/Error'
@@ -31,6 +33,11 @@ function App() {
     localStorage.clear();
   }
 
+  useEffect(() => {
+      console.log(user);
+      console.log(localStorage);
+    }, [user])
+
   return (
     <UserProvider value={{user, setUser, unsetUser}}>
       <Router>
@@ -39,7 +46,9 @@ function App() {
           <Routes>
             <Route path="*" element={<Error/>}/>
             <Route path="/" element={<Home/>}/>
+            <Route path="/admin" element={<Admin/>}/>
             <Route path="/login" element={<Login/>}/>
+            <Route path="/logout" element={<Logout/>}/>
             <Route path="/collection" element={<Products/>}/>
             <Route path="/signup" element={<Register/>}/>
           </Routes>
