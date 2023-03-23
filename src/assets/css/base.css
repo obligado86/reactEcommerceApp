@@ -34,7 +34,12 @@ body {
 
 .list-product {
     min-width: 25%;
-  }
+}
+
+.admin-nav:hover {
+    cursor: pointer;
+    color: #FFC700;
+}
 
 
 /* =========== lg ============ */

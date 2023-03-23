@@ -4,6 +4,7 @@ import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 //=================== Package Imports ================
 
 import {UserProvider} from './UserContext';
+import {ProductProvider} from './ProductContext';
 
 import './assets/css/App.css';
 import './assets/css/base.css';
@@ -29,6 +30,10 @@ function App() {
     isAdmin: null
   })
 
+  const [product, setProduct] = useState({
+    id: null
+  })
+
   const unsetUser = () => {
     localStorage.clear();
   }
@@ -40,6 +45,7 @@ function App() {
 
   return (
     <UserProvider value={{user, setUser, unsetUser}}>
+    <ProductProvider value={{product, setProduct}}>
       <Router>
         <AnnouncmentBar />
         <MainNavBar />
@@ -53,6 +59,7 @@ function App() {
             <Route path="/signup" element={<Register/>}/>
           </Routes>
       </Router>
+    </ProductProvider>
     </UserProvider>
   )
 }
