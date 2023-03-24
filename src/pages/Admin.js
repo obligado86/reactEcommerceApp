@@ -25,9 +25,6 @@ export default function Admin(){
 		})
 	}, [])
 
-	function deleteProduct(){
-		
-	}
 
 	function addProduct(){
 		setIsActive(true)
@@ -38,25 +35,23 @@ export default function Admin(){
 	}
 
 	return(
-		(user.isAdmin === false) ?
-			<Navigate to="/error"/>
-		:
+		(user.isAdmin === true && user.id !== null) ?
 			<Container fluid>
 				<Row>
-					<Col className="col-4 bg-dark p-2 vh-100" id="admin-menu">
+					<Col className="col-4 bg-dark p-2 card-height" id="admin-menu">
 						<ListGroup>
-							<ListGroup.Item className="bg-dark text-light"><h3>Admin Dashboard</h3></ListGroup.Item>
+							<ListGroup.Item className="bg-dark text-light"><h3 className="header-text">Admin Dashboard</h3></ListGroup.Item>
 							<hr/>
-							<ListGroup.Item className="bg-dark text-light admin-nav">Orders</ListGroup.Item>
+							<ListGroup.Item className="bg-dark text-light admin-nav"><h4 className="body-text">Orders</h4></ListGroup.Item>
 							<ListGroup.Item className="bg-dark text-light d-inline-flex">
-								<p onClick={viewProduct} className="admin-nav">Products</p>
-								<Button onClick={addProduct} className="btn btn-success ml-auto py-1 px-4">add new product
+								<h4 onClick={viewProduct} className="admin-nav body-text">Products</h4>
+								<Button onClick={addProduct} className="btn btn-success ml-auto py-0 px-4 body-text">add new product
 								</Button>
 							</ListGroup.Item>
-							<ListGroup.Item className="bg-dark text-light admin-nav">Analytics</ListGroup.Item>			
+							<ListGroup.Item className="bg-dark text-light admin-nav"><h4 className="body-text">Analytics</h4></ListGroup.Item>			
 							<hr/>
-							<ListGroup.Item className="bg-dark text-light admin-nav">Banners</ListGroup.Item>
-							<ListGroup.Item className="bg-dark text-light admin-nav">HighLights</ListGroup.Item>
+							<ListGroup.Item className="bg-dark text-light admin-nav"><h4 className="body-text">Banners</h4></ListGroup.Item>
+							<ListGroup.Item className="bg-dark text-light admin-nav"><h4 className="body-text">HighLights</h4></ListGroup.Item>
 						</ListGroup>
 					</Col>
 					<Col className="col-8 p-2 p-md-5" id="admin-base">
@@ -70,5 +65,7 @@ export default function Admin(){
 					</Col>
 				</Row>
 			</Container>
+		:
+			<Navigate to="/error"/>
 	)
 }

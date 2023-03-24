@@ -82,11 +82,11 @@ export default function AdminAddProduct(){
 
 	      	<Form.Group className="mb-3" controlId="firstName">
 	        	<Form.Label>Product Description</Form.Label>
-	        	<Form.Control 
-	        		type="text" 
+	        	<textarea  
 	        		placeholder="Product Description"
 	        		value={ description }
-	        		onChange={e => setDescription(e.target.value)} 
+	        		onChange={e => setDescription(e.target.value)}
+	        		className="form-control w-100 pb-5" 
 	        		required/>
 	      	</Form.Group>
 

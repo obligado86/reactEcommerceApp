@@ -41,6 +41,24 @@ body {
     color: #FFC700;
 }
 
+.product-img {
+  min-height: 300px;
+  border-bottom: 1px solid lightgray;
+}
+
+.product-text {
+  max-height: 90px;
+  min-height: 90px;
+}
+
+.fa-star, .fa {
+  color: lightgray;
+}
+
+.checked {
+  color: #FFC700 !important;
+}
+
 
 /* =========== lg ============ */
 

@@ -19,6 +19,7 @@ import Home from './pages/Home';
 import Login from './pages/Login'
 import Logout from './pages/Logout'
 import Products from './pages/Products'
+import ProductView from './pages/ProductView'
 import Register from './pages/Register'
 import Error from './pages/Error'
 //================== local imports ===================
@@ -56,6 +57,7 @@ function App() {
             <Route path="/login" element={<Login/>}/>
             <Route path="/logout" element={<Logout/>}/>
             <Route path="/collection" element={<Products/>}/>
+            <Route path="/collection/:productId" element={<ProductView/>}/>
             <Route path="/signup" element={<Register/>}/>
           </Routes>
       </Router>
