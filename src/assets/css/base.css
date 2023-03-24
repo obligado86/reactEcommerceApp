@@ -41,6 +41,11 @@ body {
     color: #FFC700;
 }
 
+.menu-nav:hover {
+      cursor: pointer;
+      color: gray;
+}
+
 .product-img {
   min-height: 300px;
   border-bottom: 1px solid lightgray;
@@ -57,6 +62,12 @@ body {
 
 .checked {
   color: #FFC700 !important;
+}
+
+.toast-position {
+  z-index: 5;
+  right: 0;
+  bottom: 0;
 }
 
 

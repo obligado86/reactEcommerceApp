@@ -43,7 +43,7 @@ export default function Admin(){
 							<ListGroup.Item className="bg-dark text-light"><h3 className="header-text">Admin Dashboard</h3></ListGroup.Item>
 							<hr/>
 							<ListGroup.Item className="bg-dark text-light admin-nav"><h4 className="body-text">Orders</h4></ListGroup.Item>
-							<ListGroup.Item className="bg-dark text-light d-inline-flex">
+							<ListGroup.Item className="bg-dark text-light d-inline-flex justify-content-between">
 								<h4 onClick={viewProduct} className="admin-nav body-text">Products</h4>
 								<Button onClick={addProduct} className="btn btn-success ml-auto py-0 px-4 body-text">add new product
 								</Button>

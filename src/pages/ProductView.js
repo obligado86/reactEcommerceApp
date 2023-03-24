@@ -1,10 +1,11 @@
 import {useEffect, useState, useContext} from 'react';
 import {Container, Row, Col, Button} from 'react-bootstrap';
-import { useParams, useNavigate } from 'react-router-dom'
+import { useParams, useNavigate, Navigate } from 'react-router-dom'
 import Swal from 'sweetalert2'
 
 import UserContext from '../UserContext';
 import ProductContext from '../ProductContext';
+import logo from '../assets/media/icons/banner-logo.jpg'
 
 export default function ProductView(){
 	const {productId} = useParams();
@@ -35,9 +36,9 @@ export default function ProductView(){
 	}
 
 	function lessQuantity(){
-		if (quantity !== 0) {
+		if (quantity !== 1) {
 			setQuantity(quantity - 1)
-		} else if (quantity === 0){
+		} else if (quantity === 1){
 			setQuantity(quantity)
 		}
 	}
@@ -55,16 +56,26 @@ export default function ProductView(){
 			setProductRating(data.productRating);
 			setReviews(data.reviews);
 		})
-	})
+	}, [productId])
 
-	const addToCart = (productId) => {
+	function failReq(){
+		Swal.fire({
+					title: "Fail request",
+					icon: "error",
+					text: "must login to your account first"
+				})
+				navigate('/login')
+	}
+
+	const addToCart = (inputQty) => {
 		fetch(`${process.env.REACT_APP_API_URL}/collection/${productId}`, {
 			method: 'PUT',
 			headers: {
-				'Content-Type': 'application/json'
+				'Content-Type': 'application/json',
+				"Authorization": `Bearer ${localStorage.getItem('token')}`
 			},
 			body: JSON.stringify({
-				quantity: quantity
+				quantity: inputQty
 			})
 		}).then(res => res.json()).then(data => {
 			if(!data){
@@ -124,8 +135,12 @@ export default function ProductView(){
 					<p className="body-text">Stock: {stock}</p>
 					<h4 className="body-text">Php {displayPrice}</h4>
 					<p><span class="fa fa-chevron-circle-left mr-1" onClick={lessQuantity}></span> {quantity} <span class="fa fa-chevron-circle-right ml-1" onClick={addQuantity}></span></p>
-					<Button className="btn btn-warning px-5">add to Cart</Button>
-
+					{user.id === null ?
+						<Button variant="warning" onClick={failReq}className="w-100 my-1">Add to cart
+						</Button>
+					:
+						<Button className="btn btn-warning px-5" onClick={() => addToCart(quantity)}>add to Cart</Button>
+					}
 				</Col>
 			</Row>
 		</Container>
