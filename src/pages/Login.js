@@ -73,8 +73,9 @@ export default function Login() {
     	(user.id !== null) ?
     		   <Navigate to="/"/>
     		:
-    		<Container className="p-5">
-    		   <Form onSubmit={e => authenticate(e)}>
+    		<Container className="p-5 vh-100">  
+    		    <Form onSubmit={e => authenticate(e)} className="my-5 py-3 py-md-5">
+                    <h1 className="mt-5 mb-4 header-text">Login</h1>
     		        <Form.Group className="mb-3" controlId="userEmail">
     		            <Form.Label>User Email</Form.Label>
     		            <Form.Control 
@@ -107,7 +108,7 @@ export default function Login() {
     				            Login
     				       </Button>
     				    }
-    				    <p className="text-center pt-1">Don't have an account yet? <a href={"/signup"}>Click Here</a> to Register</p>
+    				    <p className="text-center pt-1 body-text">Don't have an account yet? <a href={"/signup"}>Click Here</a> to Register</p>
     			</Form>
     	</Container>
 	)

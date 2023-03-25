@@ -1,14 +1,16 @@
 import { useState, useEffect, useContext } from 'react';
-import {Card, Col, Button, Form} from 'react-bootstrap';
+import {Card, Col, Button, Form } from 'react-bootstrap';
 import {Navigate, useNavigate, Link} from 'react-router-dom';
 import Swal from 'sweetalert2'
 
+import MainNavBar from './MainNavBar'
 import UserContext from '../UserContext';
 
-export default function CourseCard({product}) {
+export default function ProductCard({product}) {
 	const {_id, name, description, images, brand, stock, price, productRating} = product;
 	const [stars, setStars] = useState(productRating)
 	const displayPrice = price.toLocaleString()
+	const [item , setItem] = useState({})
 
 	const { user, setUser } = useContext(UserContext);
 	const [isActive, setIsActive] = useState(false);
@@ -32,7 +34,7 @@ export default function CourseCard({product}) {
 					text: "Item is out of stock"
 				})
 			} else {
-				
+
 			}
 		}).catch(err => console.log(err))
 	}
@@ -85,17 +87,17 @@ export default function CourseCard({product}) {
 			    	<Card.Img variant="top" src={images[0].image} className="img-fluid" />
 			    </div>
 			    <Card.Body>
-			    	<div className="product-text">
+			    	<div className="product-text m-0">
 			        	<Card.Title><h2>{name}</h2></Card.Title>
 			        </div>
-			        <Card.Title>Brand: {brand}</Card.Title>
-			        <Card.Title>Rating: <p className="" id="rating">{productRating}</p>
+			        <Card.Text>Brand: {brand}</Card.Text>
+			        <Card.Text>Rating: <p className="d-none" id="rating">{productRating}</p>
 			        <span class="fa fa-star ml-1" id="star-1"></span>
 					<span class="fa fa-star" id="star-2"></span>
 					<span class="fa fa-star" id="star-3"></span>
 					<span class="fa fa-star" id="star-4"></span>
 					<span class="fa fa-star" id="star-5"></span>
-					</Card.Title>
+					</Card.Text>
 			        <Card.Title>Php {displayPrice}</Card.Title>
 			        <Link to={`/collection/${_id}`} className="btn btn-outline-secondary w-100 mt-3">View Item</Link>
 			        {	isActive ?

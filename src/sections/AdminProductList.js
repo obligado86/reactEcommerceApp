@@ -172,13 +172,16 @@ export default function AdminProductList({product}){
 			  		</Button>
 			</Form>
 		:
-			<ListGroup horizontal as="ol" numbered className="my-2">
-				<ListGroup.Item className="list-product">{name}</ListGroup.Item>
-				<ListGroup.Item className="list-product">{brand}</ListGroup.Item>
-				<ListGroup.Item className="list-product">{stock}</ListGroup.Item>
-				<ListGroup.Item className="list-product">
-					<Button onClick={editForm} className="btn btn-success w-50">Edit</Button>
-					<Button onClick={deleteProduct} className="btn btn-danger w-50">Delete</Button>
+			<ListGroup horizontal as="ol" numbered className="my-2 col-12">
+				<ListGroup.Item className="col-4 col-md-6">{name}</ListGroup.Item>
+				<ListGroup.Item className="col-3 col-md-3">{brand}</ListGroup.Item>
+				<ListGroup.Item className="col-2 col-md-1">{stock}</ListGroup.Item>
+				<ListGroup.Item className="col-3 col-md-2 justify-content-between">
+					<h3 onClick={editForm} className="fa fa-edit text-secondary admin-nav mx-3 my-2 my-md-auto"></h3>
+					<span>
+						<h3 onClick={deleteProduct} className="hover-trigger fa fa-trash-o text-danger admin-nav mx-3 my-2 my-md-auto"></h3>
+						<h3 id="show-hover"> delete</h3>
+					</span>
 				</ListGroup.Item>
 			</ListGroup>
 		}

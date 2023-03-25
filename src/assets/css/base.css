@@ -32,10 +32,6 @@ body {
   min-height: 100%;
 }
 
-.list-product {
-    min-width: 25%;
-}
-
 .admin-nav:hover {
     cursor: pointer;
     color: #FFC700;
@@ -70,6 +66,33 @@ body {
   bottom: 0;
 }
 
+.logout-admin {
+  margin-top: auto;
+}
+
+#show-hover {
+  display: none;
+}
+
+.hover-trigger:hover #show-hover {
+  display: inline-flex;
+}
+
+#footer-logo {
+  width: 158px;
+}
+
+.nav-icon {
+  font-size: 20px;
+}
+
+.del-btn:hover {
+  color: orangered;
+}
+
+.check-out {
+  border-top: 1px solid lightgray;
+}
 
 /* =========== lg ============ */
 
@@ -82,6 +105,9 @@ body {
   }
   h3 {
     font-size: 19px;
+  }
+  .list-product {
+    min-width: 25%;
   }
   
 }
@@ -109,6 +135,9 @@ body {
   }
   h3 {
     font-size: 18px;
+  }
+  .list-product {
+    min-width: 20%;
   }
   
 }

@@ -10,12 +10,13 @@ import './assets/css/App.css';
 import './assets/css/base.css';
 
 //sections
-import AnnouncmentBar from './sections/AnnouncementBar';
 import MainNavBar from './sections/MainNavBar';
+import AdminProductList from './sections/AdminProductList'
+import Footer from './sections/Footer'
 
 //pages
-import Admin from './pages/Admin'
 import Home from './pages/Home';
+import Checkout from './pages/Checkout';
 import Login from './pages/Login'
 import Logout from './pages/Logout'
 import Products from './pages/Products'
@@ -48,18 +49,19 @@ function App() {
     <UserProvider value={{user, setUser, unsetUser}}>
     <ProductProvider value={{product, setProduct}}>
       <Router>
-        <AnnouncmentBar />
         <MainNavBar />
           <Routes>
             <Route path="*" element={<Error/>}/>
             <Route path="/" element={<Home/>}/>
-            <Route path="/admin" element={<Admin/>}/>
+            <Route path="/admin" element={<AdminProductList/>}/>
+            <Route path="/:userId/checkout" element={<Checkout/>}/>
             <Route path="/login" element={<Login/>}/>
             <Route path="/logout" element={<Logout/>}/>
             <Route path="/collection" element={<Products/>}/>
             <Route path="/collection/:productId" element={<ProductView/>}/>
             <Route path="/signup" element={<Register/>}/>
           </Routes>
+        <Footer/>
       </Router>
     </ProductProvider>
     </UserProvider>

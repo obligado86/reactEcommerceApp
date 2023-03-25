@@ -21,7 +21,7 @@ export default function ProductView(){
 	const [productRating, setProductRating] = useState('');
 	const [reviews, setReviews] = useState('');
 
-	const [quantity, setQuantity] = useState(0);
+	const [quantity, setQuantity] = useState(1);
 
 	const navigate = useNavigate();
 

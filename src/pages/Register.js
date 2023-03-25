@@ -72,7 +72,8 @@ export default function Register(){
 				    <Navigate to="/" />
 				:
 				<Container className="p-5">
-					<Form onSubmit={(e) => registerUser(e)}>
+					<Form onSubmit={(e) => registerUser(e)} className="my-5">
+					<h1 className="mt-5 mb-4 header-text">Register</h1>
 						<Form.Group className="mb-3 w-100" controlId="firstName">
 				        	<Form.Label>First Name</Form.Label>
 				        	<Form.Control 
