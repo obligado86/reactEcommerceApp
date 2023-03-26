@@ -1,15 +1,17 @@
 import {Button, Container, Row, Col, Form} from 'react-bootstrap';
-import {Link, useNavigate, Navigate} from 'react-router-dom';
+import {useNavigate, Navigate, NavLink, useParams} from 'react-router-dom';
 import {useEffect, useState, useContext} from 'react';
 import Swal from 'sweetalert2';
 
 import UserContext from '../UserContext';
-import ProductContext from '../ProductContext';
 import Cart from '../sections/Cart';
 
 export default function CheckOut(){
 	const {user} = useContext(UserContext);
-	const [houseNo, setHouseNo] = useState('');
+	const navigate = useNavigate()
+	const {userId} = useParams();
+
+	const [houseNoUnitNo, setHouseNoUnitNo] = useState('');
 	const [street, setStreet] = useState('');
 	const [town, setTown] = useState('');
 	const [city, setCity] = useState('');
@@ -21,46 +23,21 @@ export default function CheckOut(){
 	const [itemCount, setItemCount] = useState('');
 	const [total, setTotal] = useState('');
 	const [shippingCost, setShippingCost] = useState('');
+	const [discount, setDiscount] = useState('')
 
 	const displayTotalPrice = total.toLocaleString();
 	const displayShippingCost = shippingCost.toLocaleString();
+	const displayDiscount = discount.toLocaleString();
 
-	useEffect(() => {
-  		fetch(`${process.env.REACT_APP_API_URL}/${user.id}/mycart`)
-  		.then(res => res.json()).then(data => {
-  			setItems(data.map(item => {
-  				return (
-  					<Cart key={item.id} item={item} />
-  				)
-  			}))
-
-  			let dataTotal = 0
-  			let dataShipping = 0
-  			let dataQuantity = 0
-  			for(let i = 0; i < data.length; i++){
-  				let dataSubtotal = data[i].price * data[i].quantity
-  				dataTotal += dataSubtotal
-  				dataQuantity += data[i].quantity
-  				if(dataTotal < 1000){
-  					dataShipping = 120 * dataQuantity
-  					dataTotal += dataShipping
-  				}
-  				setTotal(dataTotal);
-  				setItemCount(dataQuantity);
-  				setShippingCost(dataShipping)
-  			};
-  		})
-  	}, [user])
-
-	function CheckoutItems(e){
+	function CheckoutItems(e) {
 		e.preventDefault();
-		fetch(`${process.env.REACT_APP_API_URL}/${user.id}/mycart/checkout`, {
+		fetch(`${process.env.REACT_APP_API_URL}/${userId}/mycart/checkout`, {
 			method: 'POST',
 			headers: {
 				"Content-Type": "application/json"
 			},
 			body: JSON.stringify({
-				houseNoUnitNo: houseNo,
+				houseNoUnitNo: houseNoUnitNo,
 				street: street,
 				town: town,
 				city: city,
@@ -69,6 +46,7 @@ export default function CheckOut(){
 				paymentMethod: paymentMethod
 			})
 		}).then(res => res.json()).then(data => {
+			console.log(data)
 			if(!data){
 				Swal.fire({
 					title: "Somethings went wrong",
@@ -81,25 +59,88 @@ export default function CheckOut(){
 					icon: "success",
 					text: "We'll Process your order once you recieved a confirmation"
 				});
+				navigate('/')
 			}
 		}).catch(err => console.log(err))
-	}
+	};
+
+	useEffect(() => {
+  		fetch(`${process.env.REACT_APP_API_URL}/${userId}/mycart`)
+  		.then(res => res.json()).then(data => {
+  			setItems(data.map(item => {
+  				return (
+  					<Cart key={item.id} item={item} />
+  				)
+  			}))
+
+  			let dataTotal = 0
+  			let dataShipping = 0
+  			let dataQuantity = 0
+  			let dataDiscount = 0
+  			for(let i = 0; i < data.length; i++){
+  				let dataSubtotal = data[i].price * data[i].quantity
+  				dataTotal += dataSubtotal
+  				dataQuantity += data[i].quantity
+  				if(dataTotal < 1000){
+  					dataShipping = 120 * dataQuantity
+  					dataTotal += dataShipping
+  				} else {
+  					dataDiscount = 120 * dataQuantity
+  				}
+  				setTotal(dataTotal);
+  				setItemCount(dataQuantity);
+  				setShippingCost(dataShipping);
+  				setDiscount(dataDiscount);
+  			};
+  		});
+  	}, []);
+
+	useEffect(() => {
+
+		fetch(`${process.env.REACT_APP_API_URL}/${userId}/address`, {
+			method: 'GET',
+			headers: {
+				"Content-Type": "application/json"
+			}
+		}).then(res => res.json()).then(data => {
+			if(data.length >= 0){
+				setHouseNoUnitNo(data.houseNoUnitNo);
+				setStreet(data.street);
+				setTown(data.town);
+				setCity(data.city);
+				setRegion(data.region);
+				setZipCode(data.zipCode);
+				setPaymentMethod('')
+			} else {
+				setHouseNoUnitNo('');
+				setStreet('');
+				setTown('');
+				setCity('');
+				setRegion('');
+				setZipCode('');
+				setPaymentMethod('')
+			}
+		})
+	}, [])
+
+	
 	return (
 		(user.id === null) ?
 		<Navigate to='/login'/>
 		:
+		<>
 		<Container fluid className="check-out">
 			<Row>
 				<Col className="col-5 p-5 bg-color1">
-					<Form OnSubmit={(e) => CheckoutItems(e)}>
+					<Form onSubmit={(e) => CheckoutItems(e)}>
 						<h1>Ship to:</h1>
 						<Form.Group className="mb-3" controlId="houseNo">
 						    <Form.Label>house No./Unit No./Bldg No.</Form.Label>
 						    <Form.Control 
 						        type="text" 
 						        placeholder="Enter your house/Bldg/unit number"
-						        value={ houseNo }
-						        onChange={e => setHouseNo(e.target.value)} 
+						        value={ houseNoUnitNo }
+						        onChange={e => setHouseNoUnitNo(e.target.value)} 
 						        required/>
 						</Form.Group>
 
@@ -153,7 +194,7 @@ export default function CheckOut(){
 						        required/>
 						</Form.Group>
 
-						<Form.Group className="mb-3" controlId="firstName">
+						<Form.Group className="mb-3" controlId="paymentMethod">
 						  	<Form.Label>Payment Method</Form.Label>
 						  	<select value={ paymentMethod } onChange={e => setPaymentMethod(e.target.value)} className="form-control ml-2 w-100" required>
 						  		<option value="" selected disabled>--Select Payment Option--</option>
@@ -164,8 +205,12 @@ export default function CheckOut(){
 						  	  	<option value="bladder">Bladder</option>
 						  	</select>
 						</Form.Group>
-						<Button type="submit" className="btn btn-secondary w-100 logout-admin mb-2">CheckOut</Button>
-					</Form>
+						<Button variant="secondary" type="submit" id="submitBtn" className="w-100 mt-auto">
+				  			  Checkout
+				  		</Button>
+						<Button as={NavLink} to="/" className="btn btn-warning text-light w-100 logout-admin mb-2">Cancel</Button>
+				</Form>
+			
 				</Col>
 				<Col className="col-7">
 					<Container>
@@ -175,10 +220,13 @@ export default function CheckOut(){
 						<hr className="mt-5" />
 						<p className="body-text mt-5">Total items: {itemCount}</p>
 						<p className="body-text">Shipping Cost: &#8369;{displayShippingCost}.00</p>
+						<p className="body-text">Total Discount: <span className="discount-text">&#8369;{displayDiscount}.00</span></p>
 						<h3>Total Payment: &#8369;{displayTotalPrice}.00</h3>
 					</Container>
 				</Col>
+				
 			</Row>
 		</Container>
+	</>
 	)
 }

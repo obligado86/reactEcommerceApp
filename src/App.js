@@ -22,6 +22,7 @@ import Logout from './pages/Logout'
 import Products from './pages/Products'
 import ProductView from './pages/ProductView'
 import Register from './pages/Register'
+import UserProfile from './pages/UserProfile'
 import Error from './pages/Error'
 //================== local imports ===================
 
@@ -41,6 +42,7 @@ function App() {
   }
 
   useEffect(() => {
+    //const checkUser = JSON.parse(localStorage.getItem("token"));
       console.log(user);
       console.log(localStorage);
     }, [user])
@@ -60,6 +62,7 @@ function App() {
             <Route path="/collection" element={<Products/>}/>
             <Route path="/collection/:productId" element={<ProductView/>}/>
             <Route path="/signup" element={<Register/>}/>
+            <Route path="/:userId/profile" element={<UserProfile/>}/>
           </Routes>
         <Footer/>
       </Router>

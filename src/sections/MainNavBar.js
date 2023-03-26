@@ -26,11 +26,11 @@ export default function MainNavbar(){
   		.then(res => res.json()).then(data => {
   			setItems(data.map(item => {
   				return (
-  					<Cart key={item.id} item={item} />
+  					<Cart key={item} item={item} />
   				)
   			}))
   		})
-  	}, [user])
+  	}, [])
 
   	
 
@@ -74,8 +74,8 @@ export default function MainNavbar(){
 						{ (user.id !== null) ?
 							<>
 								<NavLink data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" className="body-text menu-nav text-light mx-2"><h1 className="text-light fa fa-shopping-cart hover-trigger nav-icon"></h1><p id="show-hover"> My Cart</p></NavLink>
-								<NavLink as={NavLink} to="/" data-bs-target="#offcanvasRight" className="body-text menu-nav text-light mx-2"><h1 className="text-light fa fa-user-circle hover-trigger nav-icon"></h1><p id="show-hover"> Profile</p></NavLink>
-								<NavLink as={NavLink} to="/" data-bs-target="#offcanvasRight" className="body-text menu-nav text-light mx-2"><h1 className="text-light fa fa-bell hover-trigger nav-icon"></h1><p id="show-hover"> Notification</p></NavLink>
+								<NavLink className="body-text menu-nav text-light mx-2"><h1 as={NavLink} to={`/${user.id}/profile`} className="text-light fa fa-user-circle hover-trigger nav-icon"></h1><p id="show-hover"> Profile</p></NavLink>
+								<NavLink as={NavLink} to="/" className="body-text menu-nav text-light mx-2"><h1 className="text-light fa fa-bell hover-trigger nav-icon"></h1><p id="show-hover"> Notification</p></NavLink>
 
 								<NavLink as={NavLink} to="/logout" className="body-text menu-nav text-light mx-5">Logout</NavLink>
 							</>
@@ -102,7 +102,7 @@ export default function MainNavbar(){
 		  	<div class="offcanvas-body" id='cart'>
 		   		{items}
 		  	</div>
-		  	<Button as={NavLink} to="/:userId/checkout" className="btn btn-warning w-100 logout-admin mx-2 mb-2">Proceed Checkout</Button>
+		  	<Button as={NavLink} to={`/${user.id}/checkout`} className="btn btn-warning w-100 logout-admin mx-2 mb-2">Proceed Checkout</Button>
 		</div>
 		</>
 	:
@@ -144,7 +144,7 @@ export default function MainNavbar(){
 						<ListGroup.Item className="bg-dark text-light admin-nav"><h4 className="body-text">View Site</h4></ListGroup.Item>
 						<ListGroup.Item className="bg-dark text-light admin-nav"><h4 className="body-text">Banners</h4></ListGroup.Item>
 						<ListGroup.Item className="bg-dark text-light admin-nav "><h4 className="body-text">HighLights</h4></ListGroup.Item>
-						<Link to="/logout" className="btn btn-light logout-admin mb-1 mx-2">Logout</Link>
+						<Link to="/logout" className="btn btn-light mt-auto mb-1 mx-2">Logout</Link>
 					</ListGroup>
 					</Col>
 				<Col className="col-12 col-md-8 p-2 p-md-5" id="admin-base">

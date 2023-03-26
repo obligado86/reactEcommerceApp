@@ -12,6 +12,8 @@ export default function ProductCard({product}) {
 	const displayPrice = price.toLocaleString()
 	const [item , setItem] = useState({})
 
+	const idcreate = _id.slice(19, _id.length)
+
 	const { user, setUser } = useContext(UserContext);
 	const [isActive, setIsActive] = useState(false);
 	const navigate = useNavigate();
