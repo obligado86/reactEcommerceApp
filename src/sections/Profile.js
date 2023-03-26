@@ -2,7 +2,7 @@ import {Container, Row, Col, Card} from 'react-bootstrap';
 import {Navigate, NavLink} from 'react-router-dom';
 
 export default function Profile({user}){
-	const {_id, profilePic, firstName, lastName, email, mobileNumber, address, isActive, orders} = user
+	const { profilePic, firstName, lastName, email, mobileNumber, address, isActive, orders} = user
 	
 	return (
 		<Container className="p-5">
@@ -12,12 +12,12 @@ export default function Profile({user}){
 			<span><h5>Email:</h5> {email}</span>
 			<span><h5>Mobile Number:</h5> {mobileNumber}</span>
 			<span><h5>default address:</h5></span>
-			<p>House/Unit/Bldg Number: {address[0].houseNoUnitNo}</p>
+			{/*<p>House/Unit/Bldg Number: {address[0].houseNoUnitNo}</p>
 			<p>Street address: {address[0].street}</p>
 			<p>Barangay: {address[0].town}</p>
 			<p>City: {address[0].city}</p>
 			<p>Region: {address[0].region}</p>
-			<p>Postal Code: {address[0].Zipcode}</p>
+			<p>Postal Code: {address[0].Zipcode}</p>*/}
 		</Container>
 	)
 }

@@ -99,6 +99,10 @@ body {
   color: lightgray;
 }
 
+.closer {
+  margin-top: -3rem;
+}
+
 /* =========== lg ============ */
 
 @media (max-width: 992px) {

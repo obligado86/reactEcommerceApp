@@ -8,6 +8,7 @@ import logo from '../assets/media/icons/banner-logo.jpg'
 
 import AdminAddProduct from './AdminAddProduct'
 import AdminProductList from './AdminProductList'
+import AdminViewOrders from './AdminViewOrders'
 
 export default function MainNavbar(){
 	const { user } = useContext(UserContext);
@@ -15,6 +16,7 @@ export default function MainNavbar(){
 	const [show, setShow] = useState(false);
 	const [products, setProducts] = useState([]);
 	const [isActive, setIsActive] = useState(false)
+	const [orders, setOrders] = useState(false)
 
 	const [items, setItems] = useState('');
 
@@ -50,8 +52,13 @@ export default function MainNavbar(){
 		setIsActive(true)
 	}
 
+	function viewOrders(){
+		setOrders(true)
+	}
+
 	function viewProduct(){
 		setIsActive(false)
+		setOrders(false)
 	}
 
 	return (	
@@ -74,7 +81,7 @@ export default function MainNavbar(){
 						{ (user.id !== null) ?
 							<>
 								<NavLink data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" className="body-text menu-nav text-light mx-2"><h1 className="text-light fa fa-shopping-cart hover-trigger nav-icon"></h1><p id="show-hover"> My Cart</p></NavLink>
-								<NavLink className="body-text menu-nav text-light mx-2"><h1 as={NavLink} to={`/${user.id}/profile`} className="text-light fa fa-user-circle hover-trigger nav-icon"></h1><p id="show-hover"> Profile</p></NavLink>
+								<NavLink  as={NavLink} to={`/${user.id}/profile`} className="body-text menu-nav text-light mx-2"><h1 className="text-light fa fa-user-circle hover-trigger nav-icon"></h1><p id="show-hover"> Profile</p></NavLink>
 								<NavLink as={NavLink} to="/" className="body-text menu-nav text-light mx-2"><h1 className="text-light fa fa-bell hover-trigger nav-icon"></h1><p id="show-hover"> Notification</p></NavLink>
 
 								<NavLink as={NavLink} to="/logout" className="body-text menu-nav text-light mx-5">Logout</NavLink>
@@ -114,7 +121,7 @@ export default function MainNavbar(){
 				<Navbar.Toggle aria-controls="basic-navbar-nav" />
 				<Navbar.Collapse id="basic-navbar-nav">
 					<Nav className="ml-auto d-md-none">
-						<Nav.Link as={ NavLink } to="/" className="text-light">Orders</Nav.Link>
+						<Nav.Link onClick={viewOrders} className="text-light">Orders</Nav.Link>
 						<NavDropdown title="Manage Products" id="navbarScrollingDropdown">
 						    <NavDropdown.Item onClick={viewProduct}>Products</NavDropdown.Item>
 						    <NavDropdown.Item onClick={addProduct}>Add Products</NavDropdown.Item>
@@ -133,7 +140,7 @@ export default function MainNavbar(){
 					<ListGroup className="card-height py-3">
 						<ListGroup.Item className="bg-dark text-light"><h3 className="header-text">Admin Dashboard</h3></ListGroup.Item>
 						<hr/>
-						<ListGroup.Item className="bg-dark text-light admin-nav"><h4 className="body-text">Orders</h4></ListGroup.Item>
+						<ListGroup.Item onClick={viewOrders} className="bg-dark admin-nav"><h4 className="body-text">Orders</h4></ListGroup.Item>
 						<ListGroup.Item className="bg-dark text-light d-sm-inline-flex justify-content-between">
 							<h4 onClick={viewProduct} className="admin-nav body-text">Products</h4>
 							<h4 onClick={addProduct} className="ml-auto admin-nav hover-trigger">+ <span id="show-hover" className="body-text">Add New</span>
@@ -147,17 +154,25 @@ export default function MainNavbar(){
 						<Link to="/logout" className="btn btn-light mt-auto mb-1 mx-2">Logout</Link>
 					</ListGroup>
 					</Col>
-				<Col className="col-12 col-md-8 p-2 p-md-5" id="admin-base">
-				{ isActive ?
-					<Container className="py-5">
-						<AdminAddProduct/>
-					</Container>
+				{ orders ?
+					<Col className="col-12 col-md-8 p-2 p-md-5" id="admin-base">
+						<AdminViewOrders/>
+					</Col>
 					:
-					<Container className="py-5">
-						{products}
-					</Container>
+					<Col className="col-12 col-md-8 p-2 p-md-5" id="admin-base">
+				
+						{ isActive ?
+							<Container className="py-5">
+								<AdminAddProduct/>
+							</Container>
+						:
+							<Container className="py-5">
+								{products}
+							</Container>
+				
+						}
+					</Col>
 				}
-				</Col>
 			</Row>
 		</Container>
 		</>

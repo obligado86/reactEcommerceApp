@@ -11,6 +11,7 @@ export default function CheckOut(){
 	const navigate = useNavigate()
 	const {userId} = useParams();
 
+	const [address, setAddress] = useState([])
 	const [houseNoUnitNo, setHouseNoUnitNo] = useState('');
 	const [street, setStreet] = useState('');
 	const [town, setTown] = useState('');
@@ -103,23 +104,15 @@ export default function CheckOut(){
 				"Content-Type": "application/json"
 			}
 		}).then(res => res.json()).then(data => {
-			if(data.length >= 0){
-				setHouseNoUnitNo(data.houseNoUnitNo);
-				setStreet(data.street);
-				setTown(data.town);
-				setCity(data.city);
-				setRegion(data.region);
-				setZipCode(data.zipCode);
+			setAddress([data].map(key => {
+				setHouseNoUnitNo(key.houseNoUnitNo);
+				setStreet(key.street);
+				setTown(key.town);
+				setCity(key.city);
+				setRegion(key.region);
+				setZipCode(key.zipCode);
 				setPaymentMethod('')
-			} else {
-				setHouseNoUnitNo('');
-				setStreet('');
-				setTown('');
-				setCity('');
-				setRegion('');
-				setZipCode('');
-				setPaymentMethod('')
-			}
+			}))
 		})
 	}, [])
 

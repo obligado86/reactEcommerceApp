@@ -48,7 +48,7 @@ export default function Footer(){
 					<span className="fa fa-pinterest text-light mx-1 admin-nav"></span>
 					<span className="fa fa-twitter text-light mx-1 admin-nav"></span>
 				</Col>
-				<p className="text-center mt-3 mb-2">2023 Caccah Shopping&#169;</p>
+				<p className="text-center body-text mt-5 mb-2">2023 Caccah Shopping by: Joseph Obligado&#169;</p>
 			</Row>
 		</Container>
 	)

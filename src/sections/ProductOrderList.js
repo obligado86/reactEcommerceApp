@@ -1,13 +1,36 @@
+import {useEffect, useState, useContext} from 'react'
 import {ListGroup} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 
-export default function ProductOrders({product}) {
-	const {productId, productImage, productName, productPrice, quantity} = product
+import UserContext from '../UserContext'
 
+export default function ProductOrders({product}) {
+	//const {productId, productImage, productName, productPrice, quantity} = product
+	const {user} = useContext(UserContext);
+
+	const [products, setProducts] = useState([])
+	const [productId, setProductId] = useState('')
+	const [productImage, setProductImage] = useState('')
+	const [productName, setProductName] = useState('')
+	const [productPrice, setProductPrice] = useState('')
+	const [quantity, setQuantity] = useState('')
 	const idcreate = productId.slice(19, productId.length)
 	const subtotal = productPrice * quantity
 	const displayPrice = subtotal.toLocaleString()
 	const displayintPrice = productPrice.toLocaleString()
+
+	useEffect(() => {
+		fetch(`${process.env.REACT_APP_API_URL}/${user.id}/order/products`)
+		.then(res => res.json()).then(data => {
+			setProducts(data.map(key => {
+				setProductId(key.productId)
+				setProductImage(key.productImage)
+				setProductName(key.productName)
+				setProductPrice(key.productPrice)
+				setQuantity(key.quantity)
+			}))
+		})
+	}, [])
 
 	return (
 		<ListGroup horizontal as="ol" numbered className="my-5 col-12" id={`list-${idcreate}`}>
