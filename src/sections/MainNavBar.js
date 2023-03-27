@@ -156,7 +156,7 @@ export default function MainNavbar(){
 		</Navbar>
 		<Container fluid>
 			<Row>
-				<Col className="col-12 col-md-4 d-none d-md-block bg-dark p-2 card-height" id="admin-menu">
+				<Col className="col-12 col-md-4 d-none d-md-block bg-dark p-2 card-height min-vh-100" id="admin-menu">
 					<ListGroup className="card-height py-3">
 						<ListGroup.Item className="bg-dark text-light"><h3 className="header-text">Admin Dashboard</h3></ListGroup.Item>
 						<hr/>
