@@ -36,7 +36,6 @@ export default function UserViewOrders({orders}){
 			
 			setOrder(data.map(key => {
 				setOrderId(key.orderId);
-				//setProductImage(key.productImage);
 				setShippingCost(key.shippingCost);
 				setTotalAmount(key.totalAmount);
 				setPaymentMethod(key.paymentMethod);
@@ -49,7 +48,7 @@ export default function UserViewOrders({orders}){
 	useEffect(() => {
 		fetch(`${process.env.REACT_APP_API_URL}/${user.id}/order/products`)
 		.then(res => res.json()).then(data => {
-			console.log(data)
+			//console.log(data)
 			setProducts(data.map(key => {
 				setProductId(key.productId)
 				setProductImage(key.productImage)
