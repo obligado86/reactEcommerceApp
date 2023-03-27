@@ -2,13 +2,16 @@ import {useEffect, useState, useContext} from 'react';
 import {Container, ListGroup} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 
-//import OrderContext from '../OrderContext';
-//import UserContext from '../UserContext'
-import UserViewOrders from './UserViewOrders'
+import OrderContext from '../OrderContext';
+import ProductContext from '../ProductContext';
+import UserContext from '../UserContext'
+//import UserViewOrders from './UserViewOrders'
 
-export default function AdminViewOrder({order}){
-	const {_id, userId, products, shippingCost, totalAmount, paymentMethod, status, purchaseOn} = order
-
+export default function AdminViewOrder({ item }){
+	const {_id, userId, products, shippingCost, totalAmount, paymentMethod, status, purchaseOn} = item
+	const {order} =useContext(OrderContext)
+	const {user} =useContext(UserContext)
+	const {product} =useContext(ProductContext)
 	//const {order} = useContext(OrderContext)
 	/*const {user} = useContext(UserContext);
 	const [orders, setOrders] = useState([])
@@ -27,9 +30,9 @@ export default function AdminViewOrder({order}){
 	const [quantity, setQuantity] = useState('')*/
 
 
-	const displayShipping = shippingCost//.toLocaleString()
-	const displayTotalPrice = totalAmount//.toLocaleString()
-	const displayProductPrice = products.productPrice//.toLocaleString()
+	const displayShipping = shippingCost.toLocaleString()
+	const displayTotalPrice = totalAmount.toLocaleString()
+	const displayProductPrice = products.productPrice.toLocaleString()
 
 	/*useEffect(() => {
 		fetch(`${process.env.REACT_APP_API_URL}/admin/orders`)
@@ -64,7 +67,7 @@ export default function AdminViewOrder({order}){
 	return (
 		<Container>
 		<ListGroup horizontal as="ol" numbered className="mt-5 col-12" >
-				
+				<p>order id: {_id} by user: {userId}</p>
 				<ListGroup.Item className="col-3">Status:<br/> {status}</ListGroup.Item>
 				<ListGroup.Item className="col-3">Payment Option:<br/> {paymentMethod}</ListGroup.Item>
 				<ListGroup.Item className="col-3">Date Ordered:<br/> {purchaseOn}</ListGroup.Item>

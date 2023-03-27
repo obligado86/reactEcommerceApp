@@ -4,6 +4,7 @@ import { Link, NavLink, useNavigate } from 'react-router-dom';
 import Cart from './Cart'
 import Swal from 'sweetalert2'
 import UserContext from '../UserContext';
+import OrderContext from '../OrderContext';
 import logo from '../assets/media/icons/banner-logo.jpg'
 
 import AdminAddProduct from './AdminAddProduct'
@@ -12,6 +13,7 @@ import AdminViewOrders from './AdminViewOrders'
 
 export default function MainNavbar(){
 	const { user } = useContext(UserContext);
+	const {order} = useContext(OrderContext)
 	const navigate = useNavigate();
 	const [show, setShow] = useState(false);
 	const [products, setProducts] = useState([]);
@@ -49,16 +51,16 @@ export default function MainNavbar(){
 	}, [])
 
 	useEffect(() => {
-		fetch(`${process.env.REACT_APP_API_URL}/${user.id}/order`)
+		fetch(`${process.env.REACT_APP_API_URL}/admin/orders`)
 		.then(res => res.json()).then(data => {
 			console.log(data)
 			setOrders([data].map(order => {
 				return (
-					<AdminViewOrders order={order.id} order={order} />
+					<AdminViewOrders key={order.id} order={order} />
 				)
 			}))
 		})
-	}, [user])
+	}, [])
 
 
 	function addProduct(){
