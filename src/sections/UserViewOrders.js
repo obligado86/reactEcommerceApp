@@ -10,7 +10,7 @@ export default function UserViewOrders({orders}){
 	const [order, setOrder] = useState([])
 	const {user} = useContext(UserContext)
 
-	const [products, setProducts] = useState('')
+	const [products, setProducts] = useState([])
 	const [orderId, setOrderId] = useState('')
 	
 	const [shippingCost, setShippingCost] = useState()
@@ -26,9 +26,9 @@ export default function UserViewOrders({orders}){
 
 	//const idcreate = orderId.slice(9, orderId.length)
 
-	const displayShipping = shippingCost.toLocaleString()
-	const displayTotalPrice = totalAmount.toLocaleString()
-	const displayProductPrice = productPrice.toLocaleString()
+	const displayShipping = shippingCost//.toLocaleString()
+	const displayTotalPrice = totalAmount//.toLocaleString()
+	const displayProductPrice = productPrice//.toLocaleString()
 
 	useEffect(() => {
 		fetch(`${process.env.REACT_APP_API_URL}/${user.id}/order`)
@@ -36,8 +36,8 @@ export default function UserViewOrders({orders}){
 			
 			setOrder(data.map(key => {
 				setOrderId(key.orderId);
-				setShippingCost(key.shippingCost);
-				setTotalAmount(key.totalAmount);
+				setShippingCost(key.shippingCost.toLocaleString());
+				setTotalAmount(key.totalAmount.toLocaleString());
 				setPaymentMethod(key.paymentMethod);
 				setStatus(key.status);
 				setPurchaseOn(key.purchaseOn);
@@ -53,7 +53,7 @@ export default function UserViewOrders({orders}){
 				setProductId(key.productId)
 				setProductImage(key.productImage)
 				setProductName(key.productName)
-				setProductPrice(key.productPrice)
+				setProductPrice(key.productPrice.toLocaleString())
 				setQuantity(key.quantity)
 			}))
 		})
