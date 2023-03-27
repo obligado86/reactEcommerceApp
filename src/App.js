@@ -5,6 +5,7 @@ import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 
 import {UserProvider} from './UserContext';
 import {ProductProvider} from './ProductContext';
+import {OrderProvider} from './OrderContext';
 
 import './assets/css/App.css';
 import './assets/css/base.css';
@@ -37,19 +38,24 @@ function App() {
     id: null
   })
 
+  const [order, setOrder] = useState({
+    id: null
+  })
+
   const unsetUser = () => {
     localStorage.clear();
   }
 
   useEffect(() => {
     //const checkUser = JSON.parse(localStorage.getItem("token"));
-      console.log(user);
-      console.log(localStorage);
+      //console.log(user);
+      //console.log(localStorage);
     }, [user])
 
   return (
     <UserProvider value={{user, setUser, unsetUser}}>
     <ProductProvider value={{product, setProduct}}>
+    <OrderProvider value={{order, setOrder}}>
       <Router>
         <MainNavBar />
           <Routes>
@@ -66,6 +72,7 @@ function App() {
           </Routes>
         <Footer/>
       </Router>
+    </OrderProvider>
     </ProductProvider>
     </UserProvider>
   )

@@ -16,7 +16,8 @@ export default function MainNavbar(){
 	const [show, setShow] = useState(false);
 	const [products, setProducts] = useState([]);
 	const [isActive, setIsActive] = useState(false)
-	const [orders, setOrders] = useState(false)
+	const [viewOrders, setViewOrders] = useState(false)
+	const [orders, setOrders] = useState([])
 
 	const [items, setItems] = useState('');
 
@@ -47,18 +48,30 @@ export default function MainNavbar(){
 		})
 	}, [])
 
+	useEffect(() => {
+		fetch(`${process.env.REACT_APP_API_URL}/${user.id}/order`)
+		.then(res => res.json()).then(data => {
+			console.log(data)
+			setOrders([data].map(order => {
+				return (
+					<AdminViewOrders order={order.id} order={order} />
+				)
+			}))
+		})
+	}, [user])
+
 
 	function addProduct(){
 		setIsActive(true)
 	}
 
-	function viewOrders(){
-		setOrders(true)
+	function viewOrder(){
+		setViewOrders(true)
 	}
 
 	function viewProduct(){
 		setIsActive(false)
-		setOrders(false)
+		setViewOrders(false)
 	}
 
 	return (	
@@ -73,7 +86,12 @@ export default function MainNavbar(){
 					<Nav className="mx-auto">
 						<Nav.Link as={ NavLink } to="/" className="body-text menu-nav text-light">Home</Nav.Link>
 						<NavDropdown title="Shop By Category" id="navbarScrollingDropdown" className="body-text menu-nav">
-						    <NavDropdown.Item as={NavLink} to="/collection">All Products</NavDropdown.Item>
+						    <NavDropdown.Item as={NavLink} to="/collection" className="mega-menu">All Products</NavDropdown.Item>
+						    <NavDropdown.Item as={NavLink} to="/collection">Laptop</NavDropdown.Item>
+						    <NavDropdown.Item as={NavLink} to="/collection">Destop</NavDropdown.Item>
+						    <NavDropdown.Item as={NavLink} to="/collection">Mobile Phones</NavDropdown.Item>
+						    <NavDropdown.Item as={NavLink} to="/collection">Tablet</NavDropdown.Item>
+						    <NavDropdown.Item as={NavLink} to="/collection">Accessories</NavDropdown.Item>
 						    <NavDropdown.Divider />
 						</NavDropdown>
 					</Nav>
@@ -140,21 +158,21 @@ export default function MainNavbar(){
 					<ListGroup className="card-height py-3">
 						<ListGroup.Item className="bg-dark text-light"><h3 className="header-text">Admin Dashboard</h3></ListGroup.Item>
 						<hr/>
-						<ListGroup.Item onClick={viewOrders} className="bg-dark admin-nav"><h4 className="body-text">Orders</h4></ListGroup.Item>
+						<ListGroup.Item onClick={viewOrder} className="bg-dark text-light"><h4 className="body-text admin-nav">Orders</h4></ListGroup.Item>
 						<ListGroup.Item className="bg-dark text-light d-sm-inline-flex justify-content-between">
 							<h4 onClick={viewProduct} className="admin-nav body-text">Products</h4>
 							<h4 onClick={addProduct} className="ml-auto admin-nav hover-trigger">+ <span id="show-hover" className="body-text">Add New</span>
 							</h4>
 						</ListGroup.Item>
-						<ListGroup.Item className="bg-dark text-light admin-nav"><h4 className="body-text">Analytics</h4></ListGroup.Item>			
+						<ListGroup.Item className="bg-dark text-light"><h4 className="body-text admin-nav">Analytics</h4></ListGroup.Item>			
 						<hr/>
-						<ListGroup.Item className="bg-dark text-light admin-nav"><h4 className="body-text">View Site</h4></ListGroup.Item>
-						<ListGroup.Item className="bg-dark text-light admin-nav"><h4 className="body-text">Banners</h4></ListGroup.Item>
-						<ListGroup.Item className="bg-dark text-light admin-nav "><h4 className="body-text">HighLights</h4></ListGroup.Item>
+						<ListGroup.Item className="bg-dark text-light"><h4 className="body-text admin-nav">View Site</h4></ListGroup.Item>
+						<ListGroup.Item className="bg-dark text-light"><h4 className="admin-nav body-text">Banners</h4></ListGroup.Item>
+						<ListGroup.Item className="bg-dark text-light"><h4 className="admin-nav body-text">HighLights</h4></ListGroup.Item>
 						<Link to="/logout" className="btn btn-light mt-auto mb-1 mx-2">Logout</Link>
 					</ListGroup>
 					</Col>
-				{ orders ?
+				{ viewOrders ?
 					<Col className="col-12 col-md-8 p-2 p-md-5" id="admin-base">
 						<AdminViewOrders/>
 					</Col>

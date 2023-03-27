@@ -99,8 +99,10 @@ body {
   color: lightgray;
 }
 
-.closer {
-  margin-top: -3rem;
+.mega-menu {
+  width: 100vw;
+  position: relative;
+  float: inline-start;
 }
 
 /* =========== lg ============ */
