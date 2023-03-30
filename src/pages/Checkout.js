@@ -4,7 +4,7 @@ import {useEffect, useState, useContext} from 'react';
 import Swal from 'sweetalert2';
 
 import UserContext from '../UserContext';
-import Cart from '../sections/Cart';
+import Cart from '../components/Cart';
 
 export default function CheckOut(){
 	const {user} = useContext(UserContext);

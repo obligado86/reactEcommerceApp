@@ -2,14 +2,14 @@ import {useEffect, useState, useContext} from 'react';
 import {Navigate, NavLink} from 'react-router-dom';
 import {Container, Row, Col, Button} from 'react-bootstrap'
 
-//import Profile from '../sections/Profile';
-import UserViewOrders from '../sections/UserViewOrders'
+//import Profile from '../components/Profile';
+import UserViewOrders from '../components/UserViewOrders'
 import UserContext from '../UserContext'
 
 export default function UserProfile(){
 	const {user} = useContext(UserContext);
 	const [profile, setProfile] = ('')
-	const [orders, setOrders] = useState([])
+	
 	const [profilePic, setProfilePic] = useState('')
 	const [firstName, setFirstName] = useState('')
 	const [lastName, setLastName] = useState('')
@@ -22,6 +22,46 @@ export default function UserProfile(){
 	const [city, setCity] = useState('');
 	const [region, setRegion] = useState('');
 	const [zipCode, setZipCode] = useState('');
+
+	const [toPay, setToPay] = useState(true);
+	const [orders, setOrders] = useState([]);
+
+	const [toShip, setToShip] = useState(false);
+	const [ordersToShip, setOrdersToShip] = useState([]);
+
+	const [toRate, setToRate] = useState(false);
+	const [ordersToRate, setOrdersToRate] = useState([]);
+
+	const [canceled, setCanceled] = useState(false);
+	const [ordersToCancel, setOrdersToCancel] = useState([]);
+
+	function viewToPay(){
+		setToPay(true);
+		setToShip(false);
+		setToRate(false);
+		setCanceled(false);
+	};
+	
+	function viewToShip(){
+		setToPay(false);
+		setToShip(true);
+		setToRate(false);
+		setCanceled(false);
+	};
+
+	function viewToRate(){
+		setToPay(false);
+		setToShip(false);
+		setToRate(true);
+		setCanceled(false);
+	};
+
+	function viewToCancel(){
+		setToPay(false);
+		setToShip(false);
+		setToRate(false);
+		setCanceled(true);
+	};
 
 	useEffect(() => {
 		fetch(`${process.env.REACT_APP_API_URL}/${user.id}/profile`)
@@ -57,16 +97,16 @@ export default function UserProfile(){
 	}, [])
 
 	useEffect(() => {
-		fetch(`${process.env.REACT_APP_API_URL}/${user.id}/order`)
+		fetch(`${process.env.REACT_APP_API_URL}/${user.id}/order/pending`)
 		.then(res => res.json()).then(data => {
 			console.log(data)
-			setOrders([data].map(order => {
-				return (
-					<UserViewOrders order={order.id} order={order} />
-				)
+			setOrders(data.map(order => {
+				<UserViewOrders key={order.id} order={order} />
 			}))
-		})
-	}, [user])
+		}).catch(err => console.log(err))
+	},[])
+
+	
 
 	return (
 		(user.id === null) ?
@@ -90,7 +130,13 @@ export default function UserProfile(){
 				</Col>
 				<Col className="col-7 p-5">
 					<h1>Orders:</h1>
-					{orders}
+					<Button onClick={viewToPay} className="w-25 btn btn-light inlarge-hover">To Pay</Button>
+					<Button onClick={viewToShip} className="w-25 btn btn-light inlarge-hover">To Ship</Button>
+					<Button onClick={viewToRate} className="w-25 btn btn-light inlarge-hover">to Rate</Button>
+					<Button onClick={viewToCancel} className="w-25 btn btn-light inlarge-hover">Canceled</Button> 
+					<div className="mt-4"> 
+						{orders}
+					</div>
 				</Col>
 			</Row>
 		</Container>

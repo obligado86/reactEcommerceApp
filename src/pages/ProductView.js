@@ -85,7 +85,7 @@ export default function ProductView(){
 					text: "Item is out of stock"
 				})
 			} else {
-				
+				fetch(`${process.env.REACT_APP_API_URL}/${user.id}/mycart`)
 			}
 		}).catch(err => console.log(err))
 	}

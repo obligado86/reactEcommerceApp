@@ -7,10 +7,10 @@ import UserContext from '../UserContext';
 export default function Cart({item}){
 	const {productImage, productId, productName, quantity, price} = item;
 	const {user} = useContext(UserContext)
-	const idcreate = productId.slice(19, productId.length)
+	const idcreate = [productId].slice(19, [productId].length)
 	const subtotal = price * quantity
-	const displayPrice = subtotal.toLocaleString()
-	const displayintPrice = price.toLocaleString()
+	const displayPrice = subtotal
+	const displayintPrice = price//.toLocaleString()
 	const userId = user.id
 
 	function removeItem(productId){

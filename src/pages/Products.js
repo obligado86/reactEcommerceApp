@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react';
-import ProductCard from '../sections/ProductCard';
+import ProductCard from '../components/ProductCard';
 import {Container, Row} from 'react-bootstrap';
 
 export default function Products(){

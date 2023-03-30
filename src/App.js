@@ -10,10 +10,10 @@ import {OrderProvider} from './OrderContext';
 import './assets/css/App.css';
 import './assets/css/base.css';
 
-//sections
-import MainNavBar from './sections/MainNavBar';
-import AdminProductList from './sections/AdminProductList'
-import Footer from './sections/Footer'
+//components
+import MainNavBar from './components/MainNavBar';
+import AdminProductList from './components/AdminProductList'
+import Footer from './components/Footer'
 
 //pages
 import Home from './pages/Home';

@@ -5,12 +5,14 @@ import Swal from 'sweetalert2'
 
 import UserContext from '../UserContext'
 import ProductContext from '../ProductContext';
+import AdminProductList from './AdminProductList'
 
 export default function AdminAddProduct(){
 	const {product, setProduct} = useContext(ProductContext)
 	const {user} = useContext(UserContext)
 	const [isActive, setIsActive] = useState(false);
 	const navigate = useNavigate();
+	const [products, setProducts] = useState([])
 
 	const [name, setName] = useState('');
 	const [description, setDescription] = useState('');
@@ -50,6 +52,11 @@ export default function AdminAddProduct(){
 					icon: "success",
 					text: "Successfully add product"
 				})
+				setProducts(data.map(newProduct => {
+					return(
+						<AdminProductList key={newProduct.id} newProduct={newProduct}/>
+					)
+				}))
 			} else {
 				Swal.fire({
 					title: "fail request",

@@ -5,9 +5,10 @@ import ProductContext from '../ProductContext';
 import Swal from 'sweetalert2'
 
 export default function AdminProductList({product}){
-	const {_id, name, description, image, category, brand, stock, price} = product
+	const {_id, name, description, image, category, brand, stock, price, isActive} = product
 	const {setProduct} = useContext(ProductContext)
-	const [isActive, setIsActive] = useState(false);
+
+	const [istoEdit, setIstoEdit] = useState(false);
 
 	const [inputName, setName] = useState('');
 	const [inputDescription, setDescription] = useState('');
@@ -28,6 +29,27 @@ export default function AdminProductList({product}){
         			icon: "success",
         			text: "move product to archive"
         		});
+        		fetch(`${process.env.REACT_APP_API_URL}/collection`)
+			} else {
+				Swal.fire({
+        			title: "failed",
+        			icon: "error",
+        		});
+			}
+		}).catch(err => console.log(err))
+	}
+
+	function reActivate(id){
+		fetch(`${process.env.REACT_APP_API_URL}/admin/product/${id}/activate`, {
+			method: 'PATCH'
+		}).then(data => {
+			if(data){
+				Swal.fire({
+        			title: "Activated",
+        			icon: "success",
+        			text: "Product is now live"
+        		});
+        		fetch(`${process.env.REACT_APP_API_URL}/archived`)
 			} else {
 				Swal.fire({
         			title: "failed",
@@ -38,7 +60,7 @@ export default function AdminProductList({product}){
 	}
 
 	function editForm(){
-		setIsActive(true)
+		setIstoEdit(true)
 		setName(name);
 		setDescription(description);
 		setImage(image);
@@ -49,7 +71,7 @@ export default function AdminProductList({product}){
 	}
 
 	function cancelForm(){
-		setIsActive(false)
+		setIstoEdit(false)
 	}
 
 	function editProduct(e){
@@ -76,7 +98,7 @@ export default function AdminProductList({product}){
 					icon: "success",
 					text: "Successfully Updated"
 				})
-				setIsActive(false)
+				setIstoEdit(false)
 			} else {
 				Swal.fire({
 					title: "fail request",
@@ -89,7 +111,7 @@ export default function AdminProductList({product}){
 
 	return(
 		<>
-		{ isActive ?
+		{ istoEdit ?
 			<Form onSubmit={(e) => editProduct(e)} className="p-2 p-md-4">
 					<Form.Group className="mb-3" controlId="firstName">
 			        	<Form.Label>Product Name</Form.Label>
@@ -178,10 +200,17 @@ export default function AdminProductList({product}){
 				<ListGroup.Item className="col-2 col-md-1">{stock}</ListGroup.Item>
 				<ListGroup.Item className="col-3 col-md-2 justify-content-between">
 					<h3 onClick={editForm} className="fa fa-edit text-secondary admin-nav mx-3 my-2 my-md-auto"></h3>
-					<span>
-						<h3 onClick={deleteProduct} className="hover-trigger fa fa-trash-o text-danger admin-nav mx-3 my-2 my-md-auto"></h3>
-						<h3 id="show-hover"> delete</h3>
-					</span>
+					{ isActive ? 
+						<span>
+							<h3 onClick={deleteProduct} className="hover-trigger fa fa-trash-o text-danger admin-nav mx-3 my-2 my-md-auto"></h3>
+							<h3 id="show-hover"> delete</h3>
+						</span>
+					:
+						<span>
+							<h3 onClick={() => reActivate(_id)} className="hover-trigger fa fa fa-undo text-success admin-nav mx-3 my-2 my-md-auto"></h3>
+							<h3 id="show-hover"> activate</h3>
+						</span>
+					}
 				</ListGroup.Item>
 			</ListGroup>
 		}

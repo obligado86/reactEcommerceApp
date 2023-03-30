@@ -32,6 +32,10 @@ body {
   min-height: 100%;
 }
 
+.admin-nav {
+  color: white;
+}
+
 .admin-nav:hover {
     cursor: pointer;
     color: #FFC700;
@@ -105,6 +109,40 @@ body {
   float: inline-start;
 }
 
+.banner {
+  z-index: 2;
+  position: relative;
+  bottom: 50%;
+  left: 5%;
+}
+
+.slider {
+  position: absolute;
+  bottom: 30%;
+  left: 10%;
+}
+
+.slider-tag {
+  padding: 2px 1rem 2px 1rem;
+  border: 1px solid white;
+  color: black;
+}
+
+.card-body {
+  height: auto;
+  max-height: 10%;
+}
+
+.inlarge-hover:hover {
+  scale: 1.2;
+  z-index: 3;
+}
+
+.inlarge-hover:trigger {
+  scale: 1.1;
+  z-index: 3;
+}
+
 /* =========== lg ============ */
 
 @media (max-width: 992px) {
@@ -120,6 +158,18 @@ body {
   .list-product {
     min-width: 25%;
   }
+  /*.banner {
+    z-index: 2;
+    position: relative;
+    bottom: 8rem;
+    left: 5%;
+  }
+
+  .slider {
+    position: absolute;
+    bottom: 8rem;
+    left: 10%;
+  }*/
   
 }
 

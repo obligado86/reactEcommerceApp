@@ -1,22 +1,23 @@
 
 import { useState, useEffect, useContext } from 'react';
 import {Card, Col, Button, Form } from 'react-bootstrap';
-import {Navigate, useNavigate, Link} from 'react-router-dom';
+import {Navigate, useNavigate, Link,} from 'react-router-dom';
 import Swal from 'sweetalert2'
 
 import MainNavBar from './MainNavBar'
 import UserContext from '../UserContext';
+//import Cart from './Cart'
 
 export default function ProductCard({product}) {
 	const {_id, name, description, images, brand, stock, price, productRating} = product;
 	const [stars, setStars] = useState(productRating)
 	const displayPrice = price.toLocaleString()
-	const [item , setItem] = useState({})
-	const [starId, setStarId] = useState('')
+	//const [item , setItem] = useState({})
+	
 	const idcreate = _id.slice(19, _id.length)
 
-
-	const { user, setUser } = useContext(UserContext);
+	const [items, setItems] = useState()
+	const { user } = useContext(UserContext);
 	const [isActive, setIsActive] = useState(false);
 	const navigate = useNavigate();
 
@@ -38,7 +39,7 @@ export default function ProductCard({product}) {
 					text: "Item is out of stock"
 				})
 			} else {
-
+				fetch(`${process.env.REACT_APP_API_URL}/${user.id}/mycart`);
 			}
 		}).catch(err => console.log(err))
 	}
@@ -90,7 +91,7 @@ export default function ProductCard({product}) {
 				<div className="product-img">
 			    	<Card.Img variant="top" src={images[0].image} className="img-fluid" />
 			    </div>
-			    <Card.Body>
+			    <Card.Body className="card-body">
 			    	<div className="product-text m-0">
 			        	<Card.Title><h2>{name}</h2></Card.Title>
 			        </div>
@@ -103,7 +104,7 @@ export default function ProductCard({product}) {
 					<span class="fa fa-star" id={`${idcreate}-star5`}></span>
 					</Card.Text>
 			        <Card.Title>Php {displayPrice}</Card.Title>
-			        <Link to={`/collection/${_id}`} className="btn btn-outline-secondary w-100 mt-3">View Item</Link>
+			        <Link to={`/collection/${_id}`} className="btn btn-outline-secondary w-100 mt-auto">View Item</Link>
 			        {	isActive ?
 			        		<Button variant="warning" className="w-100 my-1 btn" onClick={() => addToCart(_id)} id="addCart">Add to cart</Button>
 			        		:

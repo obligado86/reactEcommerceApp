@@ -9,11 +9,7 @@ export default function ProductOrders({product}) {
 	const {user} = useContext(UserContext);
 
 	const [products, setProducts] = useState([])
-	const [productId, setProductId] = useState('')
-	const [productImage, setProductImage] = useState('')
-	const [productName, setProductName] = useState('')
-	const [productPrice, setProductPrice] = useState('')
-	const [quantity, setQuantity] = useState('')
+	
 	const idcreate = productId.slice(19, productId.length)
 	const subtotal = productPrice * quantity
 	const displayPrice = subtotal.toLocaleString()

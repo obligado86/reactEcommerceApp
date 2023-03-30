@@ -3,6 +3,8 @@ import { Container, Navbar, Nav, NavDropdown, ListGroup, Button, Col, Row } from
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import Cart from './Cart'
 import Swal from 'sweetalert2'
+import axios from 'axios';
+import {useQuery} from '@tanstack/react-query'
 import UserContext from '../UserContext';
 import OrderContext from '../OrderContext';
 import logo from '../assets/media/icons/banner-logo.jpg'
@@ -17,32 +19,52 @@ export default function MainNavbar(){
 	const navigate = useNavigate();
 	const [show, setShow] = useState(false);
 	const [products, setProducts] = useState([]);
+
+	const [archive, setArchive] = useState([]);
 	const [isActive, setIsActive] = useState(false)
+	const [isArchive, setIsArchive] = useState(false)
 	const [viewOrders, setViewOrders] = useState(false)
 	const [orders, setOrders] = useState([])
 
 	const [items, setItems] = useState('');
+	const [itemCount, setItemCount] = useState('')
 
   	const handleClose = () => setShow(false);
   	const handleShow = () => setShow(true);
+  	const showArchive = () => setIsArchive(true);
+  	const showList = () => setIsArchive(false);
 
   	useEffect(() => {
-  		fetch(`${process.env.REACT_APP_API_URL}/${user.id}/mycart`)
-  		.then(res => res.json()).then(data => {
-  			setItems(data.map(item => {
-  				return (
-  					<Cart key={item} item={item} />
-  				)
-  			}))
-  		})
-  	}, [])
+  		if(user.id !== null && !user.isAdmin){
+  			fetch(`${process.env.REACT_APP_API_URL}/${user.id}/mycart`)
+  			.then(res => res.json()).then(data => {
+  				//console.log(data)
+  				setItemCount(data.length)
+  				setItems(data.map(item => {
+  					return (
+  						<Cart key={item.id} item={item} />
+  					)
+  				}))
+  			})
+  		}
+  	},)
 
-  	
 
 	useEffect(() => {
-		fetch(`${process.env.REACT_APP_API_URL}/collection`)
+			fetch(`${process.env.REACT_APP_API_URL}/collection`)
+			.then(res => res.json()).then(data => {
+				setProducts(data.map(product => {
+					return(
+						<AdminProductList key={product.id} product={product}/>
+					)
+				}))
+			})
+	}, [])
+
+	useEffect(() => {
+		fetch(`${process.env.REACT_APP_API_URL}/archived`)
 		.then(res => res.json()).then(data => {
-			setProducts(data.map(product => {
+			setArchive(data.map(product => {
 				return(
 					<AdminProductList key={product.id} product={product}/>
 				)
@@ -53,8 +75,7 @@ export default function MainNavbar(){
 	useEffect(() => {
 		fetch(`${process.env.REACT_APP_API_URL}/admin/orders`)
 		.then(res => res.json()).then(data => {
-			console.log(data)
-			setOrders([data].map(order => {
+			setOrders(data.map(order => {
 				return (
 					<AdminViewOrders key={order.id} order={order} />
 				)
@@ -74,6 +95,7 @@ export default function MainNavbar(){
 	function viewProduct(){
 		setIsActive(false)
 		setViewOrders(false)
+		fetch(`${process.env.REACT_APP_API_URL}/collection`)
 	}
 
 	return (	
@@ -100,7 +122,14 @@ export default function MainNavbar(){
 					<Nav className="ml-auto mt-4 mt-md-0">
 						{ (user.id !== null) ?
 							<>
-								<NavLink data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" className="body-text menu-nav text-light mx-2"><h1 className="text-light fa fa-shopping-cart hover-trigger nav-icon"></h1><p id="show-hover"> My Cart</p></NavLink>
+								<NavLink data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" className="body-text menu-nav text-light mx-2">
+									<span class="position-relative top-0 start-100 translate-middle badge rounded-pill bg-danger">
+									    {itemCount}
+									    <span class="visually-hidden">Cart items</span>
+									</span>
+									<h1 className="text-light fa fa-shopping-cart hover-trigger nav-icon"></h1>
+									<p id="show-hover"> My Cart</p>
+								</NavLink>
 								<NavLink  as={NavLink} to={`/${user.id}/profile`} className="body-text menu-nav text-light mx-2"><h1 className="text-light fa fa-user-circle hover-trigger nav-icon"></h1><p id="show-hover"> Profile</p></NavLink>
 								<NavLink as={NavLink} to="/" className="body-text menu-nav text-light mx-2"><h1 className="text-light fa fa-bell hover-trigger nav-icon"></h1><p id="show-hover"> Notification</p></NavLink>
 
@@ -186,8 +215,19 @@ export default function MainNavbar(){
 								<AdminAddProduct/>
 							</Container>
 						:
+
 							<Container className="py-5">
-								{products}
+								<Button onClick={showList} className="btn btn-success w-50">Active List</Button>
+								<Button onClick={showArchive} className="btn btn-danger w-50">Archived List</Button>
+								{ isArchive ?
+								<>
+									{archive}
+								</>
+								:
+								<>
+									{products}
+								</>
+								}
 							</Container>
 				
 						}
