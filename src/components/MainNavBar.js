@@ -12,6 +12,7 @@ import logo from '../assets/media/icons/banner-logo.jpg'
 import AdminAddProduct from './AdminAddProduct'
 import AdminProductList from './AdminProductList'
 import AdminViewOrders from './AdminViewOrders'
+import UserViewOrders from '../components/UserViewOrders'
 
 export default function MainNavbar(){
 	const { user } = useContext(UserContext);
@@ -72,16 +73,18 @@ export default function MainNavbar(){
 		})
 	}, [])
 
-	useEffect(() => {
-		fetch(`${process.env.REACT_APP_API_URL}/admin/orders`)
+	const getOrders = (status) => {
+		fetch(`${process.env.REACT_APP_API_URL}/admin/order/${status}`)
 		.then(res => res.json()).then(data => {
-			setOrders(data.map(order => {
+			setOrders([data].map(order => {
 				return (
-					<AdminViewOrders key={order.id} order={order} />
+					<AdminViewOrders key={order} order={order}/>
 				)
 			}))
+		}).catch(err => {
+			console.log(err)
 		})
-	}, [])
+	};
 
 
 	function addProduct(){
@@ -110,12 +113,12 @@ export default function MainNavbar(){
 					<Nav className="mx-auto">
 						<Nav.Link as={ NavLink } to="/" className="body-text menu-nav text-light">Home</Nav.Link>
 						<NavDropdown title="Shop By Category" id="navbarScrollingDropdown" className="body-text menu-nav">
-						    <NavDropdown.Item as={NavLink} to="/collection" className="mega-menu">All Products</NavDropdown.Item>
-						    <NavDropdown.Item as={NavLink} to="/collection">Laptop</NavDropdown.Item>
-						    <NavDropdown.Item as={NavLink} to="/collection">Destop</NavDropdown.Item>
-						    <NavDropdown.Item as={NavLink} to="/collection">Mobile Phones</NavDropdown.Item>
-						    <NavDropdown.Item as={NavLink} to="/collection">Tablet</NavDropdown.Item>
-						    <NavDropdown.Item as={NavLink} to="/collection">Accessories</NavDropdown.Item>
+						    <NavDropdown.Item as={NavLink} to="/collection/allproducts" className="mega-menu">All Products</NavDropdown.Item>
+						    <NavDropdown.Item as={NavLink} to="/collection/Laptop">Laptop</NavDropdown.Item>
+						    <NavDropdown.Item as={NavLink} to="/collection/Desktop">Desktop</NavDropdown.Item>
+						    <NavDropdown.Item as={NavLink} to="/collection/Phone">Mobile Phones</NavDropdown.Item>
+						    <NavDropdown.Item as={NavLink} to="/collection/Tablet">Tablet</NavDropdown.Item>
+						    <NavDropdown.Item as={NavLink} to="/collection/Accessories">Accessories</NavDropdown.Item>
 						    <NavDropdown.Divider />
 						</NavDropdown>
 					</Nav>
@@ -205,7 +208,13 @@ export default function MainNavbar(){
 					</Col>
 				{ viewOrders ?
 					<Col className="col-12 col-md-8 p-2 p-md-5" id="admin-base">
-						<AdminViewOrders/>
+						<Button onClick={() => getOrders("pending")} className="w-25 btn btn-light inlarge-hover" active>Pending</Button>
+						<Button onClick={() => getOrders("processsing")} className="w-25 btn btn-light inlarge-hover">For Shipping</Button>
+						<Button onClick={() => getOrders("delivered")} className="w-25 btn btn-light inlarge-hover">Delivered</Button>
+						<Button onClick={() => getOrders("forcancelation")} className="w-25 btn btn-light inlarge-hover">Cancel request</Button>
+						<div className="mt-3">
+							{orders}
+						</div>
 					</Col>
 					:
 					<Col className="col-12 col-md-8 p-2 p-md-5" id="admin-base">

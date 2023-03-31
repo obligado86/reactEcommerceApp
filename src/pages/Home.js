@@ -29,31 +29,30 @@ export default function Home() {
 		<>
 			<Container fluid className="p-0 min-vh-100">
 				<Sliders/>
-				<Row className="p-5 justify-content-between">
+				<Row className="px-4 justify-content-center justify-content-md-between">
 					<h2 className="header-text">Shop By Category:</h2>
-					<Col className="col-4 px-2">
+					<Col className="col-12 col-md-4 px-md-2">
 						<img className="img-fluid" src={Banner1}/>
 						<h2 className="header-text text-light banner py-2">Computers</h2>
 						<h3 as={NavLink} to="/collection" className="admin-nav body-text banner">See more ></h3>
 					</Col>
-					<Col className="col-4 px-2">
+					<Col className="col-12 col-md-4 px-md-2">
 						<img className="img-fluid" src={Banner3}/>
 						<h2 className="header-text text-light banner py-2">Accessories</h2>
 						<h3 as={NavLink} to="/collection" className="admin-nav body-text banner">See more ></h3>
 					</Col>
-					<Col className="col-4 px-2">
+					<Col className="col-12 col-md-4 px-md-2">
 						<img className="img-fluid" src={Banner2}/>
 						<h2 className="header-text text-light banner py-2">Smart Home</h2>
 						<h3 as={NavLink} to="/collection" className="admin-nav body-text banner">See more ></h3>
 					</Col>
 				</Row>
-			</Container>
-			<Container className="">
-				<Row>{products}</Row>
+				<Row className="col-12 col-md-10 mx-auto">{products}</Row>
 			</Container>
 		</>
 		:
 		<>
+
 		</>
 		)
 }

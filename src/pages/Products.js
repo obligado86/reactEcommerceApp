@@ -1,8 +1,10 @@
 import {useEffect, useState} from 'react';
+import {useParams} from 'react-router-dom'
 import ProductCard from '../components/ProductCard';
 import {Container, Row} from 'react-bootstrap';
 
 export default function Products(){
+	const {categoryName} = useParams()
 	const [products, setProducts] = useState([]);
 
 	useEffect(() => {
