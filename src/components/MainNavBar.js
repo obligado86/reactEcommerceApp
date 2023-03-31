@@ -1,5 +1,5 @@
 import { useContext, useState, useEffect } from 'react';
-import { Container, Navbar, Nav, NavDropdown, ListGroup, Button, Col, Row } from "react-bootstrap";
+import { Container, Navbar, Nav, NavDropdown, ListGroup, Button, Col, Row, Form } from "react-bootstrap";
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import Cart from './Cart'
 import Swal from 'sweetalert2'
@@ -20,6 +20,7 @@ export default function MainNavbar(){
 	const navigate = useNavigate();
 	const [show, setShow] = useState(false);
 	const [products, setProducts] = useState([]);
+	const [search, setSearch] = useState('')
 
 	const [archive, setArchive] = useState([]);
 	const [isActive, setIsActive] = useState(false)
@@ -76,7 +77,7 @@ export default function MainNavbar(){
 	const getOrders = (status) => {
 		fetch(`${process.env.REACT_APP_API_URL}/admin/order/${status}`)
 		.then(res => res.json()).then(data => {
-			setOrders([data].map(order => {
+			setOrders(data.map(order => {
 				return (
 					<AdminViewOrders key={order} order={order}/>
 				)
@@ -86,6 +87,10 @@ export default function MainNavbar(){
 		})
 	};
 
+	function sreachItem(e){
+		e.preventDefault();
+		navigate(`/collection/${search}`)
+	}
 
 	function addProduct(){
 		setIsActive(true)
@@ -108,6 +113,17 @@ export default function MainNavbar(){
 			<Container fluid>
 				<Navbar.Brand as={ Link } to="/" className="d-none"><h1>Caccah Shopping</h1></Navbar.Brand>
 				<img src={logo} id="logo"/>
+				<Form className="d-flex form-inline" onSubmit={(e) => sreachItem(e)}>
+					<Form.Control
+						type="search"
+						placeholder="Search"
+						className="input-group col-5 bg-warning text-light"
+						aria-label="Search"
+						value={ search }
+						onChange={e => setSearch(e.target.value)}
+						/>
+					<Button type="submit" variant="outline-light" className="input-group fa fa-search py-2"></Button>
+				</Form>
 				<Navbar.Toggle aria-controls="basic-navbar-nav" />
 				<Navbar.Collapse id="basic-navbar-nav">
 					<Nav className="mx-auto">

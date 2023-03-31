@@ -153,6 +153,7 @@ export default function AdminProductList({product}){
 			        	  	<option value="Tablet">Tablet</option>
 			        	  	<option value="Phone">Mobile Phone</option>
 			        	  	<option value="Accessories">Accessories</option>
+			        	  	<option value="SmartHome">Smart Home</option>
 			        	</select>
 			      	</Form.Group>
 

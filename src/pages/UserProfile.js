@@ -73,7 +73,6 @@ export default function UserProfile(){
 				return (
 					<UserViewOrders key={order} order={order}/>
 				)
-				console.log(order)
 			}))
 		}).catch(err => {
 			console.log(err)

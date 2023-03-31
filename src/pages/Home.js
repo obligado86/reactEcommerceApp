@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
-import { Navigate, useNavigate, NavLink, Route, Routes } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 
 import Sliders from '../components/Slider';
 import UserContext from '../UserContext';
@@ -27,26 +27,27 @@ export default function Home() {
 	return (
 		(user.isAdmin !== true) ?
 		<>
-			<Container fluid className="p-0 min-vh-100">
+			<Container fluid className="p-0 min-vh-100 mb-5">
 				<Sliders/>
 				<Row className="px-4 justify-content-center justify-content-md-between">
 					<h2 className="header-text">Shop By Category:</h2>
 					<Col className="col-12 col-md-4 px-md-2">
 						<img className="img-fluid" src={Banner1}/>
 						<h2 className="header-text text-light banner py-2">Computers</h2>
-						<h3 as={NavLink} to="/collection" className="admin-nav body-text banner">See more ></h3>
+						<Link as={NavLink} to="/collection/Laptop" className="admin-nav body-text banner">See more ></Link>
 					</Col>
 					<Col className="col-12 col-md-4 px-md-2">
 						<img className="img-fluid" src={Banner3}/>
 						<h2 className="header-text text-light banner py-2">Accessories</h2>
-						<h3 as={NavLink} to="/collection" className="admin-nav body-text banner">See more ></h3>
+						<Link as={NavLink} to="/collection/Accessories" className="admin-nav body-text banner">See more ></Link>
 					</Col>
 					<Col className="col-12 col-md-4 px-md-2">
 						<img className="img-fluid" src={Banner2}/>
 						<h2 className="header-text text-light banner py-2">Smart Home</h2>
-						<h3 as={NavLink} to="/collection" className="admin-nav body-text banner">See more ></h3>
+						<Link as={NavLink} to="/collection/SmartHome" className="admin-nav body-text banner">See more ></Link>
 					</Col>
 				</Row>
+				<h1 className="mx-4">All Products:</h1>
 				<Row className="col-12 col-md-10 mx-auto">{products}</Row>
 			</Container>
 		</>

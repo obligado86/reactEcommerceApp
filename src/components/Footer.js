@@ -12,7 +12,7 @@ export default function Footer(){
 			</>
 		:
 
-		<Container fluid className="bg-color2 pt-5 px-5 text-light mt-5">
+		<Container fluid className="bg-color2 pt-5 px-5 text-light">
 			<Row>
 				<Col className="col-3">
 					<NavLink className="text-light"><h5 className="mb-3">Collections</h5></NavLink>
